@@ -1,0 +1,102 @@
+<div class="container">
+  <h1>
+    <app-titulo [titulo]="titulo"></app-titulo>
+  </h1>
+  <h6>
+    Cadastro de classe de objeto.
+  </h6>
+</div>
+
+<div class="container">
+  <div *ngIf="classesSelecionada">
+    <br>
+     <h3>{{classesSelecionada}}:</h3>
+     <br>
+     <div [formGroup]="objForm" (submit)="classesSubmit()">
+       <div class="mb-3">
+         <label for="formGroupExampleInput" class="form-label">Edição</label>
+         <input type="text" class="form-control" value="{{classesSelecionada}}">
+        </div>
+        <br>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+          <button class="btn btn-warning" style="cursor: pointer;" (click)="voltar()">Cancelar</button>
+          <ul></ul>
+          <button class="btn btn-danger" style="cursor: pointer;" (click)="openModal(template)"  href="classes">Deletar</button>
+          <button class="btn btn-success" style="cursor: pointer;" (click)="adcPost()" routerLink="classes">Salvar</button>
+        </div>
+      </div>
+    </div>
+
+
+    <div *ngIf="!classesSelecionada">
+    <form #form="ngForm" [formGroup]="objForm">
+      <div class="container">
+        <p class="mt-4">Descrição</p>
+        <input class="form-control me-sm-2" type="text" placeholder="Adicionar Descrição" formControlName="descricao">
+        <div class="col text-end">
+          <button type="button" class="btn btn-outline-success mt-3 mb-3" (click)="adcPost()" (click)="ngOnInit()">Adicionar</button>
+        </div>
+      </div>
+    </form>
+    <br>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Codigo</th>
+          <th scope="col">Descricao</th>
+          <th scope="col">Ações</th>
+        </tr>
+        <tr>
+          <td>
+              <div class="form-control mr2">
+                <input type="text" class="form-control mr2" placeholder="Id">
+              </div>
+          </td>
+          <td>
+            <div class="form-control mr2">
+              <input type="text" class="form-control mr2" placeholder="Classes">
+            </div>
+          </td>
+          <td>
+            <div class="input-group input-group-sm mb-3">
+              <button class="btn btn-warning" tooltip="Home" type="button" routerLink=""><i class="fa-solid fa-house-chimney"></i>Voltar</button>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>Filtro: {{filtroLista}}</td>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr *ngFor="let clas of classes">
+          <td scope="row" class="col-3">{{clas.id}}</td>
+          <td>{{clas.descricao}}</td>
+          <td>
+            <button type="button" class="btn btn-primary btn-sm" tooltip="Editar" style="cursor: pointer;" (click)="classesSelect(clas)" (click)="classSelect2(clas)">
+              <i class="fa fa-edit"></i>
+
+            </button>
+
+            <button type="button" tooltip="Excluir" class="btn btn-danger btn-sm" style="cursor: pointer;" (click)="classSelect2(clas)" (click)="openModal(template)">
+              <i class="fa fa-trash"></i>
+
+            </button>
+          </td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <ul></ul>
+<ul></ul>
+<br>
+</div>
+<ng-template #template>
+  <div class="modal-body text-center">
+    <p>Deseja excluir esta classe?</p>
+    <button type="button" class="btn btn-default" (click)="confirm()" >Sim</button>
+    <button type="button" class="btn btn-primary" (click)="decline()" >Não</button>
+  </div>
+</ng-template>
